@@ -1,15 +1,15 @@
-const CACHE = "entreno-v1";
+const CACHE = "entreno-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./app.js",
   "./styles.css",
   "./manifest.webmanifest",
-  "./vendor/react.production.min.js",
-  "./vendor/react-dom.production.min.js",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/apple-touch-icon.png"
+  "./react.production.min.js",
+  "./react-dom.production.min.js",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", (e) => {
