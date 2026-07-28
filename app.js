@@ -246,24 +246,20 @@ function Stepper({
     onChange(String(Math.max(min, n)));
   };
   return /*#__PURE__*/React.createElement("div", {
-    className: "flex items-stretch rounded-xl bg-zinc-950 border border-zinc-800 overflow-hidden"
+    className: "flex-1 min-w-0 flex items-stretch rounded-lg bg-zinc-950 border border-zinc-800 overflow-hidden"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => set((num === "" ? 0 : num) - step),
-    className: "w-11 shrink-0 text-2xl text-zinc-400 active:bg-zinc-800 select-none",
+    className: "w-8 shrink-0 text-xl text-zinc-400 active:bg-zinc-800 select-none",
     "aria-label": "menos"
-  }, "−"), /*#__PURE__*/React.createElement("div", {
-    className: "flex-1 flex items-center justify-center relative"
-  }, /*#__PURE__*/React.createElement("input", {
+  }, "−"), /*#__PURE__*/React.createElement("input", {
     inputMode: "decimal",
     value: value,
     placeholder: placeholder,
     onChange: e => onChange(e.target.value.replace(",", ".")),
-    className: "w-full bg-transparent text-center text-lg font-mono tabular-nums text-zinc-50 py-2.5 outline-none placeholder:text-zinc-600"
-  }), suffix && value !== "" && /*#__PURE__*/React.createElement("span", {
-    className: "absolute right-1.5 text-[10px] text-zinc-500"
-  }, suffix)), /*#__PURE__*/React.createElement("button", {
+    className: "w-full min-w-0 bg-transparent text-center text-base font-mono tabular-nums text-zinc-50 py-2.5 outline-none placeholder:text-zinc-600"
+  }), /*#__PURE__*/React.createElement("button", {
     onClick: () => set((num === "" ? 0 : num) + step),
-    className: "w-11 shrink-0 text-2xl text-zinc-400 active:bg-zinc-800 select-none",
+    className: "w-8 shrink-0 text-xl text-zinc-400 active:bg-zinc-800 select-none",
     "aria-label": "más"
   }, "+"));
 }
@@ -379,7 +375,7 @@ function GymApp() {
         input[type=date]{color-scheme:dark}
         ::-webkit-scrollbar{width:0;height:0}
       `), /*#__PURE__*/React.createElement("div", {
-    className: "max-w-md mx-auto min-h-screen flex flex-col relative"
+    className: "max-w-md mx-auto min-h-screen flex flex-col relative overflow-x-hidden"
   }, active ? /*#__PURE__*/React.createElement(Workout, {
     active: active,
     setActive: setActive,
@@ -740,7 +736,7 @@ function Workout({
   })), /*#__PURE__*/React.createElement("p", {
     className: "text-[11px] text-zinc-500 mt-1 font-mono"
   }, doneSets, "/", totalSets, " series")), /*#__PURE__*/React.createElement("div", {
-    className: "flex-1 px-4 py-4 space-y-4"
+    className: "flex-1 px-3 py-4 space-y-4"
   }, wk.exercises.map((e, exIdx) => /*#__PURE__*/React.createElement(ExerciseCard, {
     key: e.key,
     e: e,
@@ -797,7 +793,7 @@ function ExerciseCard({
 }) {
   const allDone = e.sets.length > 0 && e.sets.every(s => s.done);
   return /*#__PURE__*/React.createElement("div", {
-    className: `rounded-2xl border ${allDone ? "border-emerald-500/40 bg-emerald-500/5" : "border-zinc-800 bg-zinc-900"} p-4`
+    className: `rounded-2xl border ${allDone ? "border-emerald-500/40 bg-emerald-500/5" : "border-zinc-800 bg-zinc-900"} p-3`
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-start justify-between gap-3 mb-1"
   }, /*#__PURE__*/React.createElement("div", {
@@ -832,16 +828,20 @@ function ExerciseCard({
   }, e.notes), /*#__PURE__*/React.createElement("p", {
     className: "text-[11px] text-zinc-500 mb-3 font-mono"
   }, "Objetivo · ", e.reps, " reps · RIR ", e.rir), /*#__PURE__*/React.createElement("div", {
-    className: "space-y-2.5"
+    className: "space-y-2"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-[24px_1fr_1fr_auto_40px] gap-2 items-center text-[10px] uppercase tracking-wider text-zinc-600 px-1"
-  }, /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", {
-    className: "text-center"
-  }, "Peso kg"), /*#__PURE__*/React.createElement("span", {
-    className: "text-center"
+    className: "flex items-center gap-1.5 px-0.5 text-[10px] uppercase tracking-wider text-zinc-600"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-5 shrink-0"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "flex-1 text-center"
+  }, "Peso"), /*#__PURE__*/React.createElement("span", {
+    className: "flex-1 text-center"
   }, "Reps"), /*#__PURE__*/React.createElement("span", {
-    className: "text-center px-1"
-  }, "RIR"), /*#__PURE__*/React.createElement("span", null)), e.sets.map((s, setIdx) => /*#__PURE__*/React.createElement(SetRow, {
+    className: "w-9 shrink-0 text-center"
+  }, "RIR"), /*#__PURE__*/React.createElement("span", {
+    className: "w-9 shrink-0"
+  })), e.sets.map((s, setIdx) => /*#__PURE__*/React.createElement(SetRow, {
     key: setIdx,
     s: s,
     n: setIdx + 1,
@@ -873,11 +873,11 @@ function SetRow({
 }) {
   const [showRir, setShowRir] = useState(false);
   return /*#__PURE__*/React.createElement("div", {
-    className: `rounded-xl p-2 ${s.done ? "bg-emerald-500/10" : "bg-zinc-950/40"}`
+    className: `rounded-xl p-1.5 ${s.done ? "bg-emerald-500/10" : "bg-zinc-950/40"}`
   }, /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-[24px_1fr_1fr_auto_40px] gap-2 items-center"
+    className: "flex items-center gap-1.5"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-center font-mono text-sm text-zinc-500"
+    className: "w-5 shrink-0 text-center font-mono text-sm text-zinc-500"
   }, n), /*#__PURE__*/React.createElement(Stepper, {
     value: s.weight,
     onChange: onWeight,
@@ -892,13 +892,13 @@ function SetRow({
     placeholder: "–"
   }), /*#__PURE__*/React.createElement("button", {
     onClick: () => setShowRir(v => !v),
-    className: "w-10 h-11 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-sm text-zinc-200"
+    className: "w-9 h-11 shrink-0 rounded-lg bg-zinc-950 border border-zinc-800 font-mono text-sm text-zinc-200"
   }, s.rir === "" ? "·" : s.rir), /*#__PURE__*/React.createElement("button", {
     onClick: onToggle,
-    className: `w-10 h-11 rounded-xl flex items-center justify-center ${s.done ? "bg-emerald-500 text-zinc-950" : "bg-zinc-800 text-zinc-500"}`
+    className: `w-9 h-11 shrink-0 rounded-lg flex items-center justify-center ${s.done ? "bg-emerald-500 text-zinc-950" : "bg-zinc-800 text-zinc-500"}`
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "18",
-    height: "18",
+    width: "17",
+    height: "17",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
