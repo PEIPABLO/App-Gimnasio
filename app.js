@@ -1640,7 +1640,7 @@ function Body({
     unit: metricField.unit
   }), /*#__PURE__*/React.createElement("button", {
     onClick: () => exportarDatos(flash),
-    className: "mt-4 w-full text-sm font-semibold bg-zinc-900 border border-zinc-800 text-zinc-100 px-4 py-3 rounded-xl"
+    className: "mt-6 w-full text-sm font-semibold bg-zinc-900 border border-zinc-800 text-zinc-100 px-4 py-3 rounded-xl"
   }, "Exportar copia de mis datos"), /*#__PURE__*/React.createElement("div", {
     className: "mt-6 space-y-2"
   }, /*#__PURE__*/React.createElement("p", {
