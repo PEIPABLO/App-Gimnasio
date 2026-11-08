@@ -34,6 +34,38 @@ const K = {
 };
 
 /* ============================================================
+   Copia de seguridad
+   Lee directamente lo guardado en el móvil, sin pasar por la pantalla, para que
+   la copia sea exacta. Va como .txt porque es el tipo que el iPhone comparte sin
+   problemas desde una app instalada; dentro es JSON.
+   ============================================================ */
+async function exportarDatos(flash) {
+  const claves = {};
+  for (const k of Object.values(K)) claves[k] = JSON.parse(localStorage.getItem(k) ?? "null");
+  const texto = JSON.stringify({ app: "Entreno", formato: 1, exportado: new Date().toISOString(), claves });
+  const nombre = `entreno-copia-${dateKey(new Date())}.txt`;
+  const resumen = `${(claves[K.workouts] || []).length} entrenos y ${(claves[K.routines] || []).length} rutinas`;
+  const archivo = new File([texto], nombre, { type: "text/plain" });
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+      await navigator.share({ files: [archivo], title: nombre });
+      flash(`Copia lista: ${resumen}`);
+      return;
+    }
+  } catch (e) {
+    if (e.name === "AbortError") return; // has cerrado la ventana de compartir
+  }
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(archivo);
+  enlace.download = nombre;
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(enlace.href), 10000);
+  flash(`Copia lista: ${resumen}`);
+}
+
+/* ============================================================
    Utilidades
    ============================================================ */
 const uid = () => typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
@@ -1606,11 +1638,14 @@ function Body({
   }, f.label))), /*#__PURE__*/React.createElement(Chart, {
     series: series,
     unit: metricField.unit
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: () => exportarDatos(flash),
+    className: "mt-4 w-full text-sm font-semibold bg-zinc-900 border border-zinc-800 text-zinc-100 px-4 py-3 rounded-xl"
+  }, "Exportar copia de mis datos"), /*#__PURE__*/React.createElement("div", {
     className: "mt-6 space-y-2"
   }, /*#__PURE__*/React.createElement("p", {
     className: "text-xs uppercase tracking-wider text-zinc-500 mb-1"
-  }, "Historial"), sorted.length === 0 && /*#__PURE__*/React.createElement("p", {
+  }, "Historial"), sorted.length === 0 &&/*#__PURE__*/React.createElement("p", {
     className: "text-sm text-zinc-500 py-8 text-center"
   }, "Aún no hay mediciones. Añade la primera."), sorted.map(e => /*#__PURE__*/React.createElement("div", {
     key: e.id,
